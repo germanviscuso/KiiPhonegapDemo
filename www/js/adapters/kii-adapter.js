@@ -3,7 +3,7 @@ var KiiAdapter = function() {
    	this.initialize = function() {
         var deferred = $.Deferred();
 		// Initialize Kii
-		Kii.initializeWithSite("8afe06ae", "e8c86eb77f275f806efd5a4b55383f45", KiiSite.US);
+		Kii.initializeWithSite("YOUR_APP_ID", "YOUR_APP_KEY", KiiSite.US);
 		console.log("Kii initialized");
 		//Login or signup and store employees if not present
 		authenticateAndSave();
