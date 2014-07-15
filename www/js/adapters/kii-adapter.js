@@ -3,7 +3,7 @@ var KiiAdapter = function() {
    	this.initialize = function() {
         var deferred = $.Deferred();
 		// Initialize Kii
-		Kii.initializeWithSite("YOUR_APP_ID", "YOUR_APP_KEY", KiiSite.US);
+		Kii.initializeWithSite("8afe06ae", "e8c86eb77f275f806efd5a4b55383f45", KiiSite.US);
 		console.log("Kii initialized");
 		//Login or signup and store employees if not present
 		authenticateAndSave();
@@ -105,7 +105,7 @@ var KiiAdapter = function() {
         return deferred.promise();
     }
 
-	function saveObjects(bucket) {
+    function saveObjects(bucket) {
         var deferred = $.Deferred();
         // Iterate over employee list
         var l = employees.length;
