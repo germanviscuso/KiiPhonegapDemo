@@ -27,20 +27,9 @@ var KiiAdapter = function() {
 			console.log("findById Query returned successfully. Result set size: " + resultSet.length);
 		    if(resultSet.length > 0) {
 				var employee = new Object();
-				employee.id = resultSet[0].get("id");
-				employee.firstName = resultSet[0].get("firstName");
-				employee.lastName = resultSet[0].get("lastName");
-				employee.managerId = resultSet[0].get("managerId");
-				employee.managerName = resultSet[0].get("managerName");
-				employee.title = resultSet[0].get("title");
-				employee.department = resultSet[0].get("department");
-				employee.cellPhone = resultSet[0].get("cellPhone");
-				employee.officePhone = resultSet[0].get("officePhone");
-				employee.email = resultSet[0].get("email");
-				employee.city = resultSet[0].get("city");
-				employee.pic = resultSet[0].get("pic");
-				employee.twitterId = resultSet[0].get("twitterId");
-				employee.blog = resultSet[0].get("blog");
+				for(var attr in employees[0]){
+					employee[attr] = resultSet[0].get(attr);
+				}
 				deferred.resolve(employee);
 			} else
 				deferred.resolve(null);
