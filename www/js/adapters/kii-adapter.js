@@ -3,7 +3,7 @@ var KiiAdapter = function() {
    	this.initialize = function() {
         var deferred = $.Deferred();
 		// Initialize Kii
-		Kii.initializeWithSite("8afe06ae", "e8c86eb77f275f806efd5a4b55383f45", KiiSite.US);
+		Kii.initializeWithSite("YOUR_APP_ID_HERE", "YOUR_APP_KEY_HERE", KiiSite.US);
 		console.log("Kii initialized");
 		//Login or signup and store employees if not present
 		authenticateAndSave();
@@ -15,6 +15,8 @@ var KiiAdapter = function() {
         var deferred = $.Deferred();
 		// Create a user scope bucket named "employees"
 		var user = KiiUser.getCurrentUser();
+		if (user == null)
+			deferred.resolve(null);
 		var bucket = user.bucketWithName("employees");
 		// Build the query
 		var query = KiiQuery.queryWithClause(KiiClause.equals("id", id));
@@ -75,20 +77,11 @@ var KiiAdapter = function() {
 			var results = [];
 		    for(var i=0; i<resultSet.length; i++) {
 				var employee = new Object();
-				employee.id = resultSet[i].get("id");
-				employee.firstName = resultSet[i].get("firstName");
-				employee.lastName = resultSet[i].get("lastName");
-				employee.managerId = resultSet[i].get("managerId");
-				employee.managerName = resultSet[i].get("managerName");
-				employee.title = resultSet[i].get("title");
-				employee.department = resultSet[i].get("department");
-				employee.cellPhone = resultSet[i].get("cellPhone");
-				employee.officePhone = resultSet[i].get("officePhone");
-				employee.email = resultSet[i].get("email");
-				employee.city = resultSet[i].get("city");
-				employee.pic = resultSet[i].get("pic");
-				employee.twitterId = resultSet[i].get("twitterId");
-				employee.blog = resultSet[i].get("blog");
+				// Iterate and set object attributes
+				for(var attr in employees[i]){
+					employee[attr] = resultSet[i].get(attr);
+				}
+				// Save reconstructed object in result list
 				results[i] = employee;
 			}
 		    deferred.resolve(results);
@@ -108,23 +101,12 @@ var KiiAdapter = function() {
     function saveObjects(bucket) {
         var deferred = $.Deferred();
         // Iterate over employee list
-        var l = employees.length;
-        for (var i=0; i < l; i++) {
+        for (var i in employees) {
 				var employee = bucket.createObject();
-				employee.set("id", employees[i].id);
-				employee.set("firstName", employees[i].firstName);
-				employee.set("lastName", employees[i].lastName);
-				employee.set("managerId", employees[i].managerId);
-				employee.set("managerName", employees[i].managerName);
-				employee.set("title", employees[i].title);
-				employee.set("department", employees[i].department);
-				employee.set("cellPhone", employees[i].cellPhone);
-				employee.set("officePhone", employees[i].officePhone);
-				employee.set("email", employees[i].email);
-				employee.set("city", employees[i].city);
-				employee.set("pic", employees[i].pic);
-				employee.set("twitterId", employees[i].twitterId);
-				employee.set("blog", employees[i].blog);
+				// Iterate over employee attributes
+				for(var attr in employees[i]){
+				  employee.set(attr, employees[i][attr]);
+				}
 				// Save the employee
 				employee.save({
 				  success: function(theObject) {

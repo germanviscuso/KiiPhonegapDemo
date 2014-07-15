@@ -5,6 +5,7 @@ platforms/android/bin/
 platforms/android/gen/
 platforms/android/res/xml/config.xml
 platforms/android/ant-build/
+platforms/android/CordovaLib/ant-build/
 
 # iOS
 platforms/ios/build/
@@ -13,6 +14,7 @@ platforms/ios/www
 platforms/ios/MyPace/config.xml
 platforms/ios/.staging
 platforms/ios/ant-build/
+platforms/ios/CordovaLib/ant-build/
 
 # Emulator logs
 platforms/ios/cordova/console.log
